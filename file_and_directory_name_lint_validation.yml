@@ -1,0 +1,42 @@
+name: File and Directory name lint validation
+on: pull_request
+
+jobs:  
+  changedFiles: # Job that list python files
+    runs-on: ubuntu-latest
+    outputs:
+      changedfiles: ${{ steps.set-changed-files.outputs.changedfiles }} # generate output name python files by using inner step output
+    steps:
+      - name: Clone Repo
+        uses: actions/checkout@v2
+
+      - name: Get main branch
+        run: git fetch --no-tags --prune --depth=1 origin +refs/heads/${{ github.event.pull_request.base.ref }}:refs/remotes/origin/${{ github.event.pull_request.base.ref }}
+      
+      - name: Set changedFiles output variable
+        id: set-changed-files # Give it an id to handle to get step outputs in the outputs key above
+        run: echo "::set-output name=changedfiles::$(git diff --name-only --diff-filter=ACMRT origin/main HEAD)"
+        # Define step output named pyfiles base on git diff command to find comma saperated relative paths of commited python files
+      
+      - name: Print files to be validated
+        run: echo ${{steps.set-changed-files.outputs.changedfiles}}
+  file_and_directory_name_validator:
+      runs-on: ubuntu-latest
+      needs: changedFiles
+      steps:
+        - name: Echo python files to scan
+          run: echo ${{ needs.changedFiles.outputs.changedfiles }}
+
+        - name: Checkout
+          uses: actions/checkout@v2
+
+        - name: Run ls
+          run: ls -al
+
+        - name: Run Validation
+          env:
+            CHANGED_FILES: ${{ needs.changedFiles.outputs.changedfiles }}
+          run: |
+                chmod +x public/file_name_and_directory_name_validator.sh
+                public/file_name_and_directory_name_validator.sh
+          shell: bash
