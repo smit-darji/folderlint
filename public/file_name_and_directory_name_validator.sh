@@ -1,5 +1,5 @@
 echo "${CHANGED_FILES}"
-mapfile -t changedfiles < <("${CHANGED_FILES}")
+mapfile -t changedfiles < ("${CHANGED_FILES}")
 echo "hello"
 echo "${changedfiles[@]}"
 
