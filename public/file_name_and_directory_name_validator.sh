@@ -5,12 +5,14 @@ echo "${changedfiles[@]}"
 
 file_names_to_ignore=("changelog.xml", "pom.xml", "ReadMe.md")
 
+# Remove files of .github directory from list
 for i in "${!changedfiles[@]}"; do
     if [[ "${changedfiles[i]}" == .github* ]]; then
         unset 'changedfiles[i]'
     fi
 done
 
+# Get unique directories and file names
 unique_dirs=()
 unique_file_names=()
 for i in "${!changedfiles[@]}"; do
@@ -25,6 +27,7 @@ for i in "${!changedfiles[@]}"; do
     done
 done
 
+# Get Invalid Directory names
 invalid_dirs=()
 for dir in "${unique_dirs[@]}"; do
     if [[ ! "${dir}" =~ ^[A-Z0-9._]*$ ]]; then
@@ -32,6 +35,7 @@ for dir in "${unique_dirs[@]}"; do
     fi
 done
 
+# Get Invalid file names
 invalid_file_names=()
 for file_name in "${unique_file_names[@]}"; do
     if [[ ! "${file_name}" =~ [0-9]{4}_[A-Z0-9_]*.[a-zA-Z]*$ ]]; then
