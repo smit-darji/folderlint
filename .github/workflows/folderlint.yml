@@ -22,6 +22,7 @@ jobs:
       - name: Print files to be validated
         run: echo ${{steps.set-changed-files.outputs.changedfiles}}
   file_and_directory_name_validator:
+      
       runs-on: ubuntu-latest
       needs: changedFiles
       steps:
@@ -40,10 +41,9 @@ jobs:
             CHANGED_FILES: ${{ needs.changedFiles.outputs.changedfiles }}
           run: |
                 chmod 777 public/file_name_and_directory_name_validator.sh
-                public/file_name_and_directory_name_validator.sh
-                echo ::set-output name=some_output::"$SOME_OUTPUT"
+                touch Output
+                public/file_name_and_directory_name_validator.sh > Output
+                echo "------------Output---------------------"
+                cat Output
           shell: bash
-
-        - name: Get the test suite name output
-          run: echo "${{ steps.run_validation.outputs.test_suite_name }}"
         
