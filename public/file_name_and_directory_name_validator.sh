@@ -1,5 +1,4 @@
 
-changedfiles=( $(git diff --name-only --diff-filter=ACMRT origin/Master HEAD) )
 echo ${changedfiles[@]}
 echo "-----------------"
 # for str in ${CHANGED_FILES[@]}; do
