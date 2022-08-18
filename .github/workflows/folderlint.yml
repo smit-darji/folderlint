@@ -42,6 +42,7 @@ jobs:
           env:
             CHANGED_FILES: ${{ needs.changedFiles.outputs.changedfiles }}
           run: |
+                git diff --name-only --diff-filter=ACMRT origin/Master HEAD
                 changedfiles=( $(git diff --name-only --diff-filter=ACMRT origin/Master HEAD) )
                 echo ${changedfiles[@]}
                 echo "-----"
