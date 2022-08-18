@@ -1,8 +1,8 @@
 echo "${CHANGED_FILES}"
-for str in ${CHANGED_FILES[@]}; do
-  echo $str
-done
-
+# for str in ${CHANGED_FILES[@]}; do
+#   echo $str
+# done
+mapfile -t changedfiles < <("${CHANGED_FILES}")
 echo "hello"
 echo "${changedfiles[@]}"
 
