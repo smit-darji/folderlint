@@ -39,6 +39,7 @@ jobs:
           run: |
                 chmod 777 public/file_name_and_directory_name_validator.sh
                 public/file_name_and_directory_name_validator.sh
+                echo ::set-output name=some_output::"$SOME_OUTPUT"
           shell: bash
-          
+
 
