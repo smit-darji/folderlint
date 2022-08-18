@@ -7,7 +7,6 @@ echo
 arr=("")
 arr+=("${CHANGED_FILES}")
 echo ${arr[@]}
-echo "hello"
 
 
 file_names_to_ignore=("changelog.xml", "pom.xml", "ReadMe.md")
