@@ -15,8 +15,6 @@ file_names_to_ignore=("changelog.xml", "pom.xml", "ReadMe.md")
 for i in "${!arr[@]}"; do
     if [[ "${arr[i]}" == .github* ]]; then
         unset 'arr[i]'
-        echo "Failed To Remove files of .github directory from list"
-        exit 1
     fi
 done
 
