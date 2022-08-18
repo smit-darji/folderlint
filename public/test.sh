@@ -1,4 +1,7 @@
 echo "${CHANGED_FILES}"
+# for str in ${CHANGED_FILES[@]}; do
+#   echo $str
+# done
 mapfile -t changedfiles < <("${CHANGED_FILES}")
 echo "hello"
 echo "${changedfiles[@]}"
@@ -35,7 +38,7 @@ for dir in "${unique_dirs[@]}"; do
     fi
 done
 
-# Get Invalid Directory names
+# Get Invalid file names
 invalid_file_names=()
 for file_name in "${unique_file_names[@]}"; do
     if [[ ! "${file_name}" =~ [0-9]{4}_[A-Z0-9_]*.[a-zA-Z]*$ ]]; then
