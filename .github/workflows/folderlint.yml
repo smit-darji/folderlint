@@ -6,7 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       changedfiles: ${{ steps.set-changed-files.outputs.changedfiles }} # generate output name python files by using inner step output
-
     steps:
       - name: Clone Repo
         uses: actions/checkout@v2
@@ -16,9 +15,7 @@ jobs:
       
       - name: Set changedFiles output variable
         id: set-changed-files # Give it an id to handle to get step outputs in the outputs key above
-        run: |
-          echo "::set-output name=changedfiles::$(git diff --name-only --diff-filter=ACMRT origin/Master HEAD)"
-          echo "${{ steps.set-changed-files.outputs.changedfiles }}"
+        run: echo "::set-output name=changedfiles::$(git diff --name-only --diff-filter=ACMRT origin/Master HEAD)"
         # Define step output named pyfiles base on git diff command to find comma saperated relative paths of commited python files
       
       - name: Print files to be validated
@@ -40,9 +37,6 @@ jobs:
           env:
             CHANGED_FILES: ${{ needs.changedFiles.outputs.changedfiles }}
           run: |
-                chmod 777 public/file_name_and_directory_name_validator.sh
-                public/file_name_and_directory_name_validator.sh 
+                chmod u+x public/file_name_and_directory_name_validator.sh
+                public/file_name_and_directory_name_validator.sh
           shell: bash
-
-          
-
