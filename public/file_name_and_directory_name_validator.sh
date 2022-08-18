@@ -1,6 +1,6 @@
 
 echo ${changedfiles[@]}
-echo "-----------------"
+echo "-----------------In Sh File----"
 # for str in ${CHANGED_FILES[@]}; do
 #   echo $str
 # done
