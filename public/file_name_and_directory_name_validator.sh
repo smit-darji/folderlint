@@ -41,7 +41,7 @@ for dir in "${unique_dirs[@]}"; do
     if [[ ! "${dir}" =~ ^[A-Z0-9._]*$ ]]; then
         invalid_dirs+=(${dir}) 
         echo "Invalid Directory Name ${dir})"
-        exit 1
+        exit 0
     fi
 done
 
@@ -51,7 +51,7 @@ for file_name in "${unique_file_names[@]}"; do
     if [[ ! "${file_name}" =~ [0-9]{4}_[A-Z0-9_]*.[a-zA-Z]*$ ]]; then
         invalid_file_names+=(${file_name})
         echo "Invalid FIleName ${file_name})"
-        exit 1
+        exit 0
     fi
 done
 
@@ -61,12 +61,12 @@ if [[ ! -z "$invalid_dirs" || ! -z "$invalid_file_names" ]];
         if [[ ! -z "$invalid_dirs" ]]; then
             echo "${invalid_dirs[@]}"
             echo "Invalid Directory ${invalid_dirs[@]} "
-            exit 1
+            exit 0
         fi 
         if [[ ! -z "$invalid_file_names" ]]; then
             echo "${invalid_file_names[@]}"
             echo "Invalid FileName ${invalid_dirs[@]} "
-            exit 1
+            exit 0
         fi
     else
         echo "Success!!"
