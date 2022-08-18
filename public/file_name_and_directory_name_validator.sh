@@ -24,7 +24,7 @@ unique_file_names=()
 for i in "${!arr[@]}"; do
     if [[ ! " ${file_names_to_ignore[*]} " =~ " ${arr[i]##*/} " ]]; then
         unique_file_names+=(${arr[i]##*/})
-        echo "Invalid Unique File Name ${arr[i]##*/})"
+        echo "Invalid Unique File Name ${arr[i]})"
         exit 1
     fi
     IFS='/' read -ra path <<< "${arr[i]%/*}/"
