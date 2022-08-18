@@ -5,6 +5,7 @@ echo "${CHANGED_FILES}"
 # mapfile -t changedfiles < <("${CHANGED_FILES}")
 ARRAY =()
 ARRAY+=("${CHANGED_FILES}")
+echo $ARRAY
 echo "hello"
 echo "${changedfiles[@]}"
 
