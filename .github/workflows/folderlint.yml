@@ -9,6 +9,7 @@ jobs:
     steps:
       - name: Clone Repo
         uses: actions/checkout@v2
+     
 
       - name: Get Master branch
         run: git fetch --no-tags --prune --depth=1 origin +refs/heads/${{ github.event.pull_request.base.ref }}:refs/remotes/origin/${{ github.event.pull_request.base.ref }}
@@ -34,6 +35,7 @@ jobs:
           run: ls -al
 
         - name: Run Validation
+        - id: run_validation
           env:
             CHANGED_FILES: ${{ needs.changedFiles.outputs.changedfiles }}
           run: |
@@ -42,4 +44,6 @@ jobs:
                 echo ::set-output name=some_output::"$SOME_OUTPUT"
           shell: bash
 
-
+        - name: Get the test suite name output
+          run: echo "${{ steps.run_validation.outputs.test_suite_name }}"
+        
