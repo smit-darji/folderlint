@@ -3,6 +3,8 @@
 #   echo $str
 # done
 # mapfile -t changedfiles < <("${CHANGED_FILES}")
+echo ${CHANGED_FILES}
+echo "---------------"
 arr=("")
 arr+=("${CHANGED_FILES}")
 echo ${arr[@]}
