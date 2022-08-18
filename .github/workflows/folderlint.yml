@@ -43,7 +43,7 @@ jobs:
             CHANGED_FILES: ${{ needs.changedFiles.outputs.changedfiles }}
           run: |
                 git diff --name-only --diff-filter=ACMRT origin/Master HEAD
-                changedfiles=( $(git diff --name-only --diff-filter=ACMRT origin/Master HEAD) )
+                changedfiles=( $(git diff --name-only --diff-filter=ACMRT origin/Master -- HEAD) )
                 echo ${changedfiles[@]}
                 echo "-----"
                 chmod 777 public/file_name_and_directory_name_validator.sh
