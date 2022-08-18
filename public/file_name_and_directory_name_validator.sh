@@ -1,13 +1,13 @@
-git diff --name-only --diff-filter=ACMRT origin/Master HEAD
+
 changedfiles=( $(git diff --name-only --diff-filter=ACMRT origin/Master HEAD) )
 echo ${changedfiles[@]}
 echo "-----------------"
 # for str in ${CHANGED_FILES[@]}; do
 #   echo $str
 # done
-mapfile -t changedfiles < <("${CHANGED_FILES}")
-echo "hello"
-echo "${changedfiles[@]}"
+# mapfile -t changedfiles < <("${CHANGED_FILES}")
+# echo "hello"
+# echo "${changedfiles[@]}"
 
 file_names_to_ignore=("changelog.xml", "pom.xml", "ReadMe.md")
 
