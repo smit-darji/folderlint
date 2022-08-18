@@ -37,6 +37,7 @@ invalid_dirs=()
 for dir in "${unique_dirs[@]}"; do
     if [[ ! "${dir}" =~ ^[A-Z0-9._]*$ ]]; then
         invalid_dirs+=(${dir}) 
+        echo "Invalid Dirrectory Name"
         exit 1
     fi
 done
