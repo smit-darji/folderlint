@@ -37,7 +37,7 @@ jobs:
           env:
             CHANGED_FILES: ${{ needs.changedFiles.outputs.changedfiles }}
           run: |
-                ls -al /public
+                ls -al public
                 chmod u+x public/file_name_and_directory_name_validator.sh
                 ls -al
                 public/file_name_and_directory_name_validator.sh
