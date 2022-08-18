@@ -1,9 +1,11 @@
-echo "${CHANGED_FILES}"
+git diff --name-only --diff-filter=ACMRT origin/Master HEAD
+changedfiles=( $(git diff --name-only --diff-filter=ACMRT origin/Master HEAD) )
+echo ${changedfiles[@]}
 echo "-----------------"
 # for str in ${CHANGED_FILES[@]}; do
 #   echo $str
 # done
-mapfile -t changedfiles < <("./${CHANGED_FILES}")
+mapfile -t changedfiles < <("${CHANGED_FILES}")
 echo "hello"
 echo "${changedfiles[@]}"
 
