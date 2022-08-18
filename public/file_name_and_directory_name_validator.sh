@@ -1,5 +1,4 @@
-echo "${CHANGED_FILES}"
-echo 
+
 # for str in ${CHANGED_FILES[@]}; do
 #   echo $str
 # done
