@@ -15,7 +15,12 @@ jobs:
       
       - name: Set changedFiles output variable
         id: set-changed-files # Give it an id to handle to get step outputs in the outputs key above
-        run: echo "::set-output name=changedfiles::$(git diff --name-only --diff-filter=ACMRT origin/Master HEAD)"
+        run: | 
+          echo "::set-output name=changedfiles::$(git diff --name-only --diff-filter=ACMRT origin/Master HEAD)"
+          changedfiles=( $(git diff --name-only --diff-filter=ACMRT origin/Master HEAD) )
+          echo "-----------------------"
+          echo ${changedfiles[@]}
+          echo "-----------------------"
         # Define step output named pyfiles base on git diff command to find comma saperated relative paths of commited python files
       
       - name: Print files to be validated
