@@ -24,15 +24,13 @@ unique_file_names=()
 for i in "${!arr[@]}"; do
     if [[ ! " ${file_names_to_ignore[*]} " =~ " ${arr[i]##*/} " ]]; then
         unique_file_names+=(${arr[i]##*/})
-        echo "Invalid Unique File Name ${arr[i]})"
-        exit 1
+
     fi
     IFS='/' read -ra path <<< "${arr[i]%/*}/"
     for i in "${path[@]}"; do
         if [[ ! " ${unique_dirs[*]} " =~ " ${i} " ]]; then
             unique_dirs+=(${i})
-            echo "Invalid Unique Directory Name ${i})"
-            exit 1
+          
         fi
     done
 done
