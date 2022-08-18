@@ -1,5 +1,4 @@
 
-echo ${{steps.set-changed-files.outputs.changedfiles}}
 echo ${changedfiles[@]}
 echo "-----------------"
 # for str in ${CHANGED_FILES[@]}; do
