@@ -21,31 +21,86 @@ jobs:
           echo "-----------------------"
           echo ${changedfiles[@]}
           echo "-----------------------"
+
+          file_names_to_ignore=("changelog.xml", "pom.xml", "ReadMe.md")
+
+        # Remove files of .github directory from list
+          for i in "${!changedfiles[@]}"; do
+              if [[ "${changedfiles[i]}" == .github* ]]; then
+                  unset 'changedfiles[i]'
+              fi
+          done
+
+          # Get unique directories and file names
+          unique_dirs=()
+          unique_file_names=()
+          for i in "${!changedfiles[@]}"; do
+              if [[ ! " ${file_names_to_ignore[*]} " =~ " ${changedfiles[i]##*/} " ]]; then
+                  unique_file_names+=(${changedfiles[i]##*/})
+              fi
+              IFS='/' read -ra path <<< "${changedfiles[i]%/*}/"
+              for i in "${path[@]}"; do
+                  if [[ ! " ${unique_dirs[*]} " =~ " ${i} " ]]; then
+                      unique_dirs+=(${i})
+                  fi
+              done
+          done
+
+          # Get Invalid Directory names
+          invalid_dirs=()
+          for dir in "${unique_dirs[@]}"; do
+              if [[ ! "${dir}" =~ ^[A-Z0-9._]*$ ]]; then
+                  invalid_dirs+=(${dir}) 
+              fi
+          done
+
+          # Get Invalid file names
+          invalid_file_names=()
+          for file_name in "${unique_file_names[@]}"; do
+              if [[ ! "${file_name}" =~ [0-9]{4}_[A-Z0-9_]*.[a-zA-Z]*$ ]]; then
+                  invalid_file_names+=(${file_name}) 
+              fi
+          done
+
+          if [[ ! -z "$invalid_dirs" || ! -z "$invalid_file_names" ]]; 
+              then
+                  echo "Failed!!"
+                  if [[ ! -z "$invalid_dirs" ]]; then
+                      echo "Invalid Directory Names"
+                      echo "${invalid_dirs[@]}"
+                  fi 
+                  if [[ ! -z "$invalid_file_names" ]]; then
+                      echo "Invalid File Names"
+                      echo "${invalid_file_names[@]}"
+                  fi
+              else
+                  echo "Success!!"
+          fi
         # Define step output named pyfiles base on git diff command to find comma saperated relative paths of commited python files
       
-      - name: Print files to be validated
-        run: echo ${{steps.set-changed-files.outputs.changedfiles}}
-  file_and_directory_name_validator:
-      runs-on: ubuntu-latest
-      needs: changedFiles
-      steps:
-        - name: Echo python files to scan
-          run: echo ${{ needs.changedFiles.outputs.changedfiles }}
+      # - name: Print files to be validated
+      #   run: echo ${{steps.set-changed-files.outputs.changedfiles}}
+  # file_and_directory_name_validator:
+  #     runs-on: ubuntu-latest
+  #     needs: changedFiles
+  #     steps:
+  #       - name: Echo python files to scan
+  #         run: echo ${{ needs.changedFiles.outputs.changedfiles }}
 
-        - name: Checkout
-          uses: actions/checkout@v2
+  #       - name: Checkout
+  #         uses: actions/checkout@v2
 
-        - name: Run ls
-          run: ls -al
+  #       - name: Run ls
+  #         run: ls -al
 
-        - name: Run Validation
-          env:
-            CHANGED_FILES: ${{ needs.changedFiles.outputs.changedfiles }}
-          run: |
-                git diff --name-only --diff-filter=ACMRT origin/Master HEAD
-                changedfiles=( $(git diff --name-only --diff-filter=ACMRT origin/Master -- HEAD) )
-                echo ${changedfiles[@]}
-                echo "-----"
-                chmod 777 public/file_name_and_directory_name_validator.sh
-                public/file_name_and_directory_name_validator.sh
-          shell: bash
+  #       - name: Run Validation
+  #         env:
+  #           CHANGED_FILES: ${{ needs.changedFiles.outputs.changedfiles }}
+  #         run: |
+  #               git diff --name-only --diff-filter=ACMRT origin/Master HEAD
+  #               changedfiles=( $(git diff --name-only --diff-filter=ACMRT origin/Master -- HEAD) )
+  #               echo ${changedfiles[@]}
+  #               echo "-----"
+  #               chmod 777 public/file_name_and_directory_name_validator.sh
+  #               public/file_name_and_directory_name_validator.sh
+  #         shell: bash
